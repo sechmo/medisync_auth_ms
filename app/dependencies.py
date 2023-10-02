@@ -10,12 +10,13 @@ from .schemas import TokenData, Auth, UserInDB
 from .constants import SECRET_KEY, ALGORITHM
 from .db import auth_db, permissions_db
 
+def get_password_hash(password):
+    return pwd_context.hash(password)
 def verify_password(plain_password, hashed_password):
+    print("passed password: " + plain_password, "hashed:"+get_password_hash(plain_password), "actual:"+hashed_password,sep="\n")
     return pwd_context.verify(plain_password, hashed_password)
 
 
-def get_password_hash(password):
-    return pwd_context.hash(password)
 
 
 def get_user(db, username: str)-> UserInDB | None:
@@ -35,9 +36,11 @@ def get_user_auth(db, user_id: str)-> Auth | None:
 
 def authenticate_user(client_db, auth_db, username: str, password: str):
     user = get_user(client_db, username)
+    print("user from db: ",user)
     if not user:
         return False
     user_auth = get_user_auth(auth_db, user.id)
+    print("user_auth from db: ",user_auth)
     if not user_auth:
         return False
     if not verify_password(password, user_auth.hashed_password):

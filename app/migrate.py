@@ -1,6 +1,6 @@
 from pymongo.mongo_client import MongoClient
 
-uri = "mongodb+srv://root:password@db:27018/?retryWrites=true&w=majority"
+uri = "mongodb://root:example@db:27017/?authSource=admin"
 
 # Create a new client and connect to the server
 client = MongoClient(uri)
