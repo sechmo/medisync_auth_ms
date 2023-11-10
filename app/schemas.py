@@ -6,8 +6,15 @@ class Token(BaseModel):
     token_type: str
 
 class TokenData(BaseModel):
-    username: str | None = None
+    id: str
+    user_id: str
     scopes: list[str] = []
+
+class RegisterRequest(BaseModel):
+    username: str
+    password: str
+    user_id: str
+    role: str
 
 class Role(str, Enum):
     admin = "admin"
@@ -26,3 +33,5 @@ class User(BaseModel):
 
 class UserInDB(User):
     id: str
+
+  
